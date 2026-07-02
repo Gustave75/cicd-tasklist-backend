@@ -51,7 +51,8 @@ pipeline {
                             -w $(pwd) \
                             -e SONAR_HOST_URL=$SONAR_HOST_URL \
                             -e SONAR_TOKEN=${SONAR_TOKEN:-$SONAR_AUTH_TOKEN} \
-                            sonarsource/sonar-scanner-cli
+                            sonarsource/sonar-scanner-cli \
+                            -Dsonar.working.directory=.scannerwork
                     '''
                 }
             }
