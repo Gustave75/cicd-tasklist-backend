@@ -48,9 +48,11 @@ pipeline {
                     sh '''
                         docker run --rm \
                             --volumes-from $(hostname) \
+                            --user $(id -u):$(id -g) \
                             -w $(pwd) \
                             -e SONAR_HOST_URL=$SONAR_HOST_URL \
                             -e SONAR_TOKEN=${SONAR_TOKEN:-$SONAR_AUTH_TOKEN} \
+                            -e HOME=/tmp \
                             sonarsource/sonar-scanner-cli \
                             -Dsonar.working.directory=.scannerwork
                     '''
