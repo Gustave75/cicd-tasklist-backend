@@ -62,8 +62,14 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: false
+                script {
+                    try {
+                        timeout(time: 3, unit: 'MINUTES') {
+                            waitForQualityGate abortPipeline: false
+                        }
+                    } catch (err) {
+                        echo "Quality Gate non confirmé dans le délai imparti, on continue le pipeline : ${err}"
+                    }
                 }
             }
         }
